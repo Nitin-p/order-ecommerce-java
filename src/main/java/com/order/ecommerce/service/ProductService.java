@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class ProductService implements IProductService {
 
     private final IProductRepository productRepository;
-    private final ProductMapper productMapper = Mappers.getMapper(ProductMapper.class);
+    private ProductMapper productMapper = Mappers.getMapper(ProductMapper.class);
 
     @Override
     public ProductDto createProduct(ProductDto productDto) {

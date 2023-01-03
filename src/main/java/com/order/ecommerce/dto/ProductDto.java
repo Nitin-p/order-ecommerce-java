@@ -1,12 +1,14 @@
 package com.order.ecommerce.dto;
 
+import javax.validation.constraints.NotNull;
+
 import lombok.Builder;
 import lombok.Data;
-
-import javax.validation.constraints.NotNull;
+import lombok.extern.jackson.Jacksonized;
 
 @Data
 @Builder
+@Jacksonized
 public class ProductDto {
 
     @NotNull

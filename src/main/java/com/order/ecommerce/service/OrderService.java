@@ -13,7 +13,9 @@ import com.order.ecommerce.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
@@ -34,7 +36,7 @@ public class OrderService implements IOrderService {
     private final IAddressRepository addressRepository;
 
     private final IProductService productService;
-    private final OrderDetailsMapper orderDetailsMapper = Mappers.getMapper(OrderDetailsMapper.class);
+    private  OrderDetailsMapper orderDetailsMapper = Mappers.getMapper(OrderDetailsMapper.class);
 
     @Override
     @Transactional
@@ -45,8 +47,9 @@ public class OrderService implements IOrderService {
         List<String> productIds = orderDto.getOrderItems().stream().map(orderItemDto -> orderItemDto.getProductId()).distinct().collect(Collectors.toList());
         List<ProductDto> products = productService.findAllById(productIds);
         if (products == null || products.isEmpty() || products.size() != productIds.size()) {
-            log.info("Not all product(s) exist, failed to create order!");
-            return null;
+        	String message=new String("Not all product(s) exist, failed to create order!");
+            log.info(message);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, message);
         }
 
         Order order = generateOrder(orderDto);

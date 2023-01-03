@@ -3,6 +3,7 @@ package com.order.ecommerce.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.extern.jackson.Jacksonized;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 @Data
 @Builder
 @AllArgsConstructor
+@Jacksonized
 public class OrderDto {
 
     @NotNull
